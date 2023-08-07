@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="mdTohtmlContainer"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+    <script type="text/javascript">
+        const mdTohtmlContainer = document.getElementById("mdTohtmlContainer");
+        let htmlText = undefined;
+        var converter = new showdown.Converter({ tables: true });
+        converter.setFlavor("github");
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const fileURL = urlParams.get("fileURL");
+        fetch(fileURL)
+            .then((result) => result.text())
+            .then((data) => {
+                htmlText = converter.makeHtml(data);
+                console.log(htmlText);
+                mdTohtmlContainer.innerHTML = htmlText;
+            });
+    </script>
+</body>
+
+</html>
