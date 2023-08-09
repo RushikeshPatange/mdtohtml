@@ -17,7 +17,13 @@
         converter.setFlavor("github");
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        const fileURL = urlParams.get("fileURL");
+        let parameter = "fileURL";
+        let fileURL = undefined;
+        if (queryString.includes("&")) {
+            fileURL = queryString.substring(queryString.search(parameter) + parameter.length + 1);
+        } else {
+            fileURL = urlParams.get(parameter);
+        }
         fetch(fileURL)
             .then((result) => result.text())
             .then((data) => {
